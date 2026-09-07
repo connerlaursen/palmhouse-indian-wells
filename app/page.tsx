@@ -196,7 +196,7 @@ function MonthCalendar({
         <span>{year}</span>
       </h3>
       <div className="weekdays" aria-hidden="true">
-        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
           <span key={`${day}-${index}`}>{day}</span>
         ))}
       </div>
@@ -216,7 +216,7 @@ function MonthCalendar({
           const selected = key === selectedStart || key === selectedEnd;
           const disabled = loading || past || unavailable;
           const label = `${date.toLocaleString('en-US', { month: 'long' })} ${day}, ${year}${
-            unavailable ? ', unavailable' : checkoutOnly ? ', checkout only' : ', available'
+            unavailable ? ', booked' : checkoutOnly ? ', checkout only' : ', available'
           }`;
           return (
             <button
@@ -335,7 +335,6 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#stay">Check availability <span>→</span></a>
-            <a className="text-link" href="#gallery">Wander through the home <span>↓</span></a>
           </div>
           <dl className="hero-facts" aria-label="Property facts">
             <div><dt>Guests</dt><dd>6</dd></div>
@@ -346,15 +345,10 @@ export default function Home() {
         </div>
         <div className="hero-image" role="img" aria-label="Palm-lined private pool at the Indian Wells home">
           <div className="sun-disc" aria-hidden="true" />
-          <div className="hero-caption">
-            <span>01</span>
-            <p>Pool days, blue-sky mornings, and warm desert nights.</p>
-          </div>
         </div>
       </section>
 
       <section className="intro-section" id="home" aria-labelledby="home-title">
-        <div className="section-index">01 / The home</div>
         <div className="intro-heading">
           <p className="eyebrow"><span /> Come settle in</p>
           <h2 id="home-title">Room to gather.<br /><em>Space to exhale.</em></h2>
@@ -374,9 +368,7 @@ export default function Home() {
       </section>
 
       <section className="feature-split" aria-label="Property highlights">
-        <div className="feature-image feature-image-main">
-          <span>Desert living, inside and out</span>
-        </div>
+        <div className="feature-image feature-image-main" />
         <div className="feature-content">
           <p className="eyebrow light"><span /> The good stuff</p>
           <h2>Everything you need.<br /><em>Nothing you don’t.</em></h2>
@@ -447,7 +439,7 @@ export default function Home() {
           </p>
           <div className="calendar-legend">
             <span><i className="available-dot" /> Available</span>
-            <span><i className="unavailable-dot" /> Unavailable</span>
+            <span><i className="unavailable-dot" /> Booked</span>
             <span><i className="limited-dot" /> Checkout only</span>
           </div>
           <p className="source-note">
@@ -558,52 +550,30 @@ export default function Home() {
             <article key={name}><span>{distance}</span><h3>{name}</h3><p>{copy}</p></article>
           ))}
         </div>
-      </section>
-
-      <section className="events-section" aria-labelledby="events-title">
-        <div className="events-heading">
-          <div className="section-index">02 / All year long</div>
-          <div>
-            <p className="eyebrow"><span /> Save the season</p>
-            <h2 id="events-title">There’s always a<br /><em>reason to return.</em></h2>
+        <div className="events-flow" aria-labelledby="events-title">
+          <div className="events-heading">
+            <div>
+              <p className="eyebrow light"><span /> Save the season</p>
+              <h2 id="events-title">There’s always a<br /><em>reason to return.</em></h2>
+            </div>
+            <p>
+              A guest-friendly calendar of the valley’s signature traditions. Event dates can
+              move each year, so follow the links for the current schedule before making plans.
+            </p>
           </div>
-          <p>
-            A guest-friendly calendar of the valley’s signature traditions. Event dates can
-            move each year, so follow the links for the current schedule before making plans.
-          </p>
-        </div>
-        <div className="season-grid">
-          {seasonalEvents.map((block, index) => (
-            <article key={block.season}>
-              <span>0{index + 1}</span>
-              <p>{block.season}</p>
-              <h3>{block.tone}</h3>
-              <ul>
-                {block.events.map(([event, href]) => (
-                  <li key={event}><a href={href} target="_blank" rel="noreferrer">{event}<span>↗</span></a></li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="daytrip-section" aria-label="Palm Springs day trip ideas">
-        <div className="daytrip-image" />
-        <div className="daytrip-copy">
-          <p className="eyebrow"><span /> Make a day of it</p>
-          <h2>Palm Springs,<br /><em>your way.</em></h2>
-          <p>
-            Head west for mid-century architecture, the Palm Springs Art Museum, a stroll
-            through Thursday night VillageFest, or a rotating tram ride into the cool air of
-            Mount San Jacinto. Go farther for the palm oases of Indian Canyons or the stark,
-            star-filled landscape of Joshua Tree.
-          </p>
-          <div className="daytrip-links">
-            <a href="https://www.psmuseum.org/" target="_blank" rel="noreferrer">Palm Springs Art Museum <span>↗</span></a>
-            <a href="https://pstramway.com/" target="_blank" rel="noreferrer">Aerial Tramway <span>↗</span></a>
-            <a href="https://www.indian-canyons.com/" target="_blank" rel="noreferrer">Indian Canyons <span>↗</span></a>
-            <a href="https://www.nps.gov/jotr/planyourvisit/index.htm" target="_blank" rel="noreferrer">Joshua Tree <span>↗</span></a>
+          <div className="season-grid">
+            {seasonalEvents.map((block, index) => (
+              <article key={block.season}>
+                <span>0{index + 1}</span>
+                <p>{block.season}</p>
+                <h3>{block.tone}</h3>
+                <ul>
+                  {block.events.map(([event, href]) => (
+                    <li key={event}><a href={href} target="_blank" rel="noreferrer">{event}<span>↗</span></a></li>
+                  ))}
+                </ul>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -623,7 +593,7 @@ export default function Home() {
             them, and an easy base for whichever version of the valley brought you here.
           </p>
         </div>
-        <div className="story-image"><span>Welcome to Palmhouse</span></div>
+        <div className="story-image" />
       </section>
 
       <section className="final-cta" aria-labelledby="final-title">

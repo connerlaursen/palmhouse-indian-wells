@@ -117,8 +117,7 @@ main {
 }
 
 .site-header nav a::after,
-.site-footer nav a::after,
-.daytrip-links a::after {
+.site-footer nav a::after {
   background: currentColor;
   bottom: -7px;
   content: '';
@@ -132,8 +131,7 @@ main {
 }
 
 .site-header nav a:hover::after,
-.site-footer nav a:hover::after,
-.daytrip-links a:hover::after {
+.site-footer nav a:hover::after {
   transform: scaleX(1);
 }
 
@@ -255,7 +253,6 @@ h2 em {
   transition: background 180ms ease, transform 180ms ease;
 }
 
-.text-link,
 .text-button {
   background: transparent;
   border: 0;
@@ -268,7 +265,6 @@ h2 em {
   text-transform: uppercase;
 }
 
-.text-link span,
 .text-button span {
   margin-left: 10px;
 }
@@ -331,45 +327,11 @@ h2 em {
   width: clamp(130px, 15vw, 240px);
 }
 
-.hero-caption {
-  align-items: flex-start;
-  background: var(--slate-dark);
-  bottom: 0;
-  color: var(--white);
-  display: flex;
-  gap: 22px;
-  left: 0;
-  max-width: 375px;
-  padding: 24px 28px;
-  position: absolute;
-}
-
-.hero-caption > span {
-  color: var(--sand);
-  font-family: var(--serif);
-  font-size: 19px;
-}
-
-.hero-caption p {
-  font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.45;
-}
-
 .intro-section {
   display: grid;
-  gap: 5vw;
-  grid-template-columns: 0.5fr 1.15fr 0.75fr;
+  gap: 8vw;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
   padding: 150px 7vw;
-}
-
-.section-index {
-  color: var(--ink-soft);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.17em;
-  padding-top: 7px;
-  text-transform: uppercase;
 }
 
 .intro-heading h2,
@@ -377,10 +339,13 @@ h2 em {
 .gallery-heading h2,
 .reviews-heading h2,
 .events-heading h2,
-.daytrip-copy h2,
 .story-copy h2 {
   font-size: clamp(52px, 5.1vw, 84px);
   margin-top: 24px;
+}
+
+.intro-heading h2 {
+  font-size: clamp(70px, 7.2vw, 118px);
 }
 
 .intro-body {
@@ -415,18 +380,6 @@ h2 em {
 
 .feature-image-main {
   background-image: linear-gradient(180deg, rgba(48, 61, 75, 0), rgba(48, 61, 75, 0.34)), url('/images/property-04.jpg');
-}
-
-.feature-image > span,
-.story-image > span {
-  background: var(--cream);
-  bottom: 0;
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: 15px;
-  left: 0;
-  padding: 18px 24px;
-  position: absolute;
 }
 
 .feature-content {
@@ -632,23 +585,24 @@ h2 em {
 
 .calendar-legend span {
   align-items: center;
-  color: rgba(255, 254, 251, 0.7);
+  color: rgba(255, 254, 251, 0.9);
   display: flex;
-  font-size: 10px;
-  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  gap: 10px;
 }
 
 .calendar-legend i {
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid var(--white);
   border-radius: 50%;
   display: inline-block;
-  height: 9px;
-  width: 9px;
+  height: 20px;
+  width: 20px;
 }
 
-.calendar-legend .available-dot { background: var(--cream); }
-.calendar-legend .unavailable-dot { background: transparent; opacity: 0.45; }
-.calendar-legend .limited-dot { border-color: var(--sand); border-width: 2px; }
+.calendar-legend .available-dot { background: var(--white); }
+.calendar-legend .unavailable-dot { background: #8291a4; border-color: #8291a4; }
+.calendar-legend .limited-dot { background: var(--sand); border-color: var(--sand); }
 
 .source-note {
   color: var(--sand);
@@ -659,7 +613,7 @@ h2 em {
 }
 
 .calendar-panel {
-  background: var(--cream);
+  background: var(--white);
   color: var(--ink);
   padding: 30px 30px 0;
 }
@@ -725,8 +679,8 @@ h2 em {
 }
 
 .weekdays span {
-  color: var(--ink-soft);
-  font-size: 8px;
+  color: var(--ink);
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.1em;
   padding-bottom: 11px;
@@ -742,13 +696,14 @@ h2 em {
 }
 
 .calendar-grid button {
-  background: transparent;
-  border: 0;
+  background: var(--white);
+  border: 1px solid rgba(48, 61, 75, 0.2);
   border-radius: 50%;
   color: var(--ink);
   cursor: pointer;
-  font-size: 11px;
-  margin: 1px;
+  font-size: 13px;
+  font-weight: 650;
+  margin: 2px;
   position: relative;
   transition: background 150ms ease, color 150ms ease;
   z-index: 1;
@@ -761,7 +716,8 @@ h2 em {
 }
 
 .calendar-grid button.in-range {
-  background: rgba(101, 121, 149, 0.16);
+  background: #dbe3ec;
+  border-color: #dbe3ec;
   border-radius: 0;
 }
 
@@ -770,21 +726,22 @@ h2 em {
 }
 
 .calendar-grid button.unavailable {
-  color: rgba(48, 61, 75, 0.35);
+  background: #8291a4;
+  border-color: #8291a4;
+  color: var(--white);
   cursor: not-allowed;
-  text-decoration: line-through;
+  opacity: 0.92;
 }
 
-.calendar-grid button.limited:not(.selected)::after {
-  border: 1.5px solid var(--sand-dark);
-  border-radius: 50%;
-  content: '';
-  height: calc(100% - 8px);
-  position: absolute;
-  width: calc(100% - 8px);
+.calendar-grid button.limited:not(.selected) {
+  background: var(--sand);
+  border-color: var(--sand-dark);
+  color: var(--ink);
 }
 
 .calendar-grid button:disabled:not(.unavailable) {
+  background: transparent;
+  border-color: transparent;
   color: rgba(48, 61, 75, 0.3);
   cursor: default;
 }
@@ -1090,47 +1047,53 @@ h2 em {
   margin-top: 8px;
 }
 
-.events-section {
-  padding: 145px 7vw;
+.events-flow {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  margin: 0 -7vw;
+  padding: 135px 7vw 145px;
 }
 
 .events-heading {
   display: grid;
   gap: 4vw;
-  grid-template-columns: 0.4fr 1fr 0.65fr;
+  grid-template-columns: 1fr 0.6fr;
 }
 
 .events-heading > p:last-child {
   align-self: end;
-  color: var(--ink-soft);
+  color: rgba(255, 254, 251, 0.67);
   font-family: var(--serif);
   font-size: 16px;
   line-height: 1.65;
 }
 
+.events-heading h2 em {
+  color: var(--sand);
+}
+
 .season-grid {
-  border-left: 1px solid var(--line);
-  border-top: 1px solid var(--line);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin-top: 76px;
 }
 
 .season-grid article {
-  border-bottom: 1px solid var(--line);
-  border-right: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
   min-height: 440px;
   padding: 28px;
 }
 
 .season-grid article > span {
-  color: var(--clay);
+  color: var(--sand);
   font-family: var(--serif);
   font-size: 18px;
 }
 
 .season-grid article > p {
-  color: var(--ink-soft);
+  color: rgba(255, 254, 251, 0.62);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1153,11 +1116,11 @@ h2 em {
 }
 
 .season-grid li {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .season-grid li:last-child {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .season-grid li a {
@@ -1171,55 +1134,8 @@ h2 em {
 }
 
 .season-grid li a span {
-  color: var(--clay);
+  color: var(--sand);
   margin-left: 10px;
-}
-
-.daytrip-section {
-  background: var(--dune);
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  min-height: 760px;
-}
-
-.daytrip-image {
-  background: linear-gradient(180deg, rgba(41, 56, 71, 0.02), rgba(41, 56, 71, 0.18)), url('/images/property-03.jpg') center / cover;
-  min-height: 650px;
-}
-
-.daytrip-copy {
-  align-self: center;
-  padding: 80px clamp(42px, 6vw, 104px);
-}
-
-.daytrip-copy > p:not(.eyebrow) {
-  color: var(--ink-soft);
-  font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.7;
-  margin-top: 36px;
-}
-
-.daytrip-links {
-  border-top: 1px solid var(--line);
-  display: grid;
-  gap: 16px 28px;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 35px;
-  padding-top: 25px;
-}
-
-.daytrip-links a {
-  font-size: 10px;
-  font-weight: 650;
-  letter-spacing: 0.05em;
-  padding-bottom: 5px;
-  position: relative;
-}
-
-.daytrip-links a span {
-  color: var(--clay);
-  float: right;
 }
 
 .story-section {
@@ -1455,14 +1371,16 @@ h2 em {
     border-right: 0;
   }
 
-  .explore-header,
-  .events-heading {
+  .explore-header {
     grid-template-columns: 0.25fr 1fr;
   }
 
-  .explore-header > p:last-child,
-  .events-heading > p:last-child {
+  .explore-header > p:last-child {
     grid-column: 2;
+  }
+
+  .events-heading {
+    grid-template-columns: 1fr 0.7fr;
   }
 
   .season-grid {
@@ -1513,12 +1431,12 @@ h2 em {
 
   .intro-section {
     gap: 35px;
-    grid-template-columns: 0.35fr 1fr;
+    grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
     padding: 110px 7vw;
   }
 
   .intro-body {
-    grid-column: 2;
+    align-self: end;
   }
 
   .feature-split {
@@ -1540,8 +1458,12 @@ h2 em {
   }
 
   .gallery-section,
-  .reviews-section,
-  .events-section {
+  .reviews-section {
+    padding-bottom: 110px;
+    padding-top: 110px;
+  }
+
+  .events-flow {
     padding-bottom: 110px;
     padding-top: 110px;
   }
@@ -1573,14 +1495,6 @@ h2 em {
 
   .local-strip article:nth-child(3) {
     border-right: 1px solid rgba(255, 255, 255, 0.18);
-  }
-
-  .daytrip-section {
-    grid-template-columns: 1fr;
-  }
-
-  .daytrip-image {
-    min-height: 66vw;
   }
 
   .story-section {
@@ -1623,15 +1537,6 @@ h2 em {
     min-height: 85vw;
   }
 
-  .hero-caption {
-    max-width: 76%;
-    padding: 17px 19px;
-  }
-
-  .hero-caption p {
-    font-size: 13px;
-  }
-
   .hero-copy {
     padding-bottom: 75px;
     padding-top: 65px;
@@ -1663,10 +1568,6 @@ h2 em {
     padding-top: 90px;
   }
 
-  .section-index {
-    margin-bottom: 48px;
-  }
-
   .intro-body {
     margin-top: 48px;
   }
@@ -1676,7 +1577,6 @@ h2 em {
   .gallery-heading h2,
   .reviews-heading h2,
   .events-heading h2,
-  .daytrip-copy h2,
   .story-copy h2,
   .feature-content h2,
   .availability-intro h2,
@@ -1718,7 +1618,6 @@ h2 em {
 
   .gallery-section,
   .reviews-section,
-  .events-section,
   .availability-section {
     padding-bottom: 90px;
     padding-top: 90px;
@@ -1815,6 +1714,11 @@ h2 em {
     display: block;
   }
 
+  .events-flow {
+    padding-bottom: 90px;
+    padding-top: 90px;
+  }
+
   .explore-header > p:last-child,
   .events-heading > p:last-child {
     margin-top: 36px;
@@ -1862,18 +1766,6 @@ h2 em {
 
   .season-grid ul {
     margin-top: 38px;
-  }
-
-  .daytrip-image {
-    min-height: 85vw;
-  }
-
-  .daytrip-copy {
-    padding: 78px 7vw 88px;
-  }
-
-  .daytrip-links {
-    grid-template-columns: 1fr;
   }
 
   .story-section {
