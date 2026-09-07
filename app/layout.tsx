@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   description:
     'A private 3-bedroom Indian Wells vacation home with a pool and spa, close to tennis, golf, Coachella, and Stagecoach.',
   icons: {
-    icon: '/images/logo-palm-houses.png',
-    apple: '/images/logo-palm-houses.png',
+    icon: '/images/logo-palm-houses-transparent.png',
+    apple: '/images/logo-palm-houses-transparent.png',
   },
   openGraph: {
     title: 'Palmhouse Indian Wells',

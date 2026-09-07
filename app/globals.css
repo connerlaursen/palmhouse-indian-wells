@@ -309,22 +309,10 @@ h2 em {
 }
 
 .hero-image {
-  background: linear-gradient(180deg, rgba(41, 56, 71, 0.02), rgba(41, 56, 71, 0.26)), url('/images/property-01.jpg') center / cover;
+  background: url('/images/hero-pool-original.png') center / cover;
   min-height: 680px;
   overflow: hidden;
   position: relative;
-}
-
-.sun-disc {
-  background: rgba(238, 216, 176, 0.92);
-  border-radius: 50%;
-  height: clamp(130px, 15vw, 240px);
-  left: 9%;
-  mix-blend-mode: screen;
-  opacity: 0.68;
-  position: absolute;
-  top: 8%;
-  width: clamp(130px, 15vw, 240px);
 }
 
 .intro-section {

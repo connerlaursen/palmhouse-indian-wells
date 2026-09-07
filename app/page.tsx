@@ -311,7 +311,7 @@ export default function Home() {
     <main id="top">
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Palmhouse Indian Wells home">
-          <img src="/images/logo-palm-houses.png" alt="Palm Houses" />
+          <img src="/images/logo-palm-houses-transparent.png" alt="Palm Houses" />
           <span>Indian Wells, California</span>
         </a>
         <nav aria-label="Primary navigation">
@@ -344,7 +344,6 @@ export default function Home() {
           </dl>
         </div>
         <div className="hero-image" role="img" aria-label="Palm-lined private pool at the Indian Wells home">
-          <div className="sun-disc" aria-hidden="true" />
         </div>
       </section>
 
@@ -579,7 +578,7 @@ export default function Home() {
       </section>
 
       <section className="story-section" id="story" aria-labelledby="story-title">
-        <div className="story-mark"><img src="/images/logo-palm-houses.png" alt="" /></div>
+        <div className="story-mark"><img src="/images/logo-palm-houses-transparent.png" alt="" /></div>
         <div className="story-copy">
           <p className="eyebrow"><span /> A note from the owners</p>
           <h2 id="story-title">A home made<br /><em>for gathering.</em></h2>
@@ -604,7 +603,7 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <div className="footer-brand"><img src="/images/logo-palm-houses.png" alt="Palm Houses" /><p>A private desert retreat in Indian Wells, California.</p></div>
+        <div className="footer-brand"><img src="/images/logo-palm-houses-transparent.png" alt="Palm Houses" /><p>A private desert retreat in Indian Wells, California.</p></div>
         <nav aria-label="Footer navigation">
           <a href="#home">The home</a><a href="#gallery">Gallery</a><a href="#stay">Availability</a><a href="#explore">Explore</a>
         </nav>
