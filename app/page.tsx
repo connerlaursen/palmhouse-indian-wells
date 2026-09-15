@@ -391,8 +391,8 @@ export default function Home() {
         <div className="sleep-cards">
           {[
             ['Primary suite', 'King bed', 'property-06.jpg'],
-            ['Guest room', 'Queen bed', 'property-08.jpg'],
-            ['Guest room', 'Queen bed', 'property-13.jpg'],
+            ['Guest room', 'Queen bed', 'bedroom-02-evolve-20.jpg'],
+            ['Guest room', 'Queen bed', 'bedroom-03-evolve-25.jpg'],
           ].map(([room, bed, image]) => (
             <article key={`${room}-${image}`}>
               <img src={`/images/${image}`} alt={`${room} with ${bed.toLowerCase()}`} />
