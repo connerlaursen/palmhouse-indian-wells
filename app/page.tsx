@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { defaultSiteContent, type SiteContent } from '@/lib/site-content';
 
 const EVOLVE_URL =
   'https://evolve.com/vacation-rentals/us/ca/indian-wells/435461';
@@ -77,92 +78,6 @@ const reviews = [
     quote:
       'House was extremely well kept and had everything we needed. We really enjoyed our stay!',
     name: 'Rachel',
-  },
-] as const;
-
-const destinationGroups = [
-  {
-    number: '01',
-    label: 'The big weekends',
-    title: 'Coachella & Stagecoach',
-    copy: 'The festival shuttle hub is about 0.6 mile from the house—close enough for an easy start and a quiet landing afterward.',
-    meta: '0.6 mi to shuttle',
-    href: 'https://www.coachella.com/',
-  },
-  {
-    number: '02',
-    label: 'Center court',
-    title: 'Indian Wells Tennis Garden',
-    copy: 'Walk or make the short hop to the home of the BNP Paribas Open and a full calendar of tennis and community events.',
-    meta: '0.6 mi',
-    href: 'https://bnpparibasopen.com/',
-  },
-  {
-    number: '03',
-    label: 'Tee time',
-    title: 'Golf in every direction',
-    copy: 'Indian Wells Golf Resort, Indian Wells Country Club, Toscana, La Quinta Resort, Shadow Mountain, and more are all close by.',
-    meta: '1.8 mi to nearest course',
-    href: 'https://www.visitgreaterpalmsprings.com/things-to-do/golf/',
-  },
-  {
-    number: '04',
-    label: 'Desert miles',
-    title: 'Trails, palms & open sky',
-    copy: 'Choose Bump and Grind, the Coachella Valley Preserve, Indian Canyons, or a day among the granite and Joshua trees.',
-    meta: '5.7 mi to nearest trail',
-    href: 'https://www.nps.gov/jotr/planyourvisit/index.htm',
-  },
-] as const;
-
-const seasonalEvents = [
-  {
-    season: 'January · February',
-    tone: 'The desert wakes up',
-    events: [
-      ['The American Express PGA TOUR', 'https://www.theamexgolf.com/'],
-      ['Concert Series at The Gardens on El Paseo', 'https://www.simon.com/mall/the-gardens-on-el-paseo/about'],
-      ['La Quinta Car Show', 'https://www.lqcarshow.com/'],
-      ['Dr. George Charity Car Show', 'https://palmspringscruisinassociation.com/dr-george-charity-car-show/'],
-      ['Art on Main Street in La Quinta', 'https://oldtownlaquinta.com/art-on-main-street/'],
-      ['Riverside County Fair & Date Festival', 'https://www.datefest.org/'],
-    ],
-  },
-  {
-    season: 'March · April',
-    tone: 'The headline season',
-    events: [
-      ['BNP Paribas Open', 'https://bnpparibasopen.com/'],
-      ['Fashion Week El Paseo', 'https://fashionweekelpaseo.com/'],
-      ['Palm Desert Food & Wine', 'https://palmdesertfoodandwine.com/'],
-      ['Coachella', 'https://www.coachella.com/'],
-      ['Stagecoach', 'https://www.stagecoachfestival.com/'],
-      ['Indian Wells junior tennis', 'https://www.indianwellstennisgarden.com/events/'],
-    ],
-  },
-  {
-    season: 'May · September',
-    tone: 'Long days, local pace',
-    events: [
-      ['Greater Palm Springs Restaurant Week', 'https://www.visitgreaterpalmsprings.com/restaurant-week/'],
-      ['Thursday VillageFest · summer 7–10pm', 'https://villagefest.org/about-us/'],
-      ['Museum, tram & pool days', 'https://www.visitgreaterpalmsprings.com/things-to-do/'],
-      ['Summer concerts and arena events', 'https://acrisurearena.com/events/'],
-    ],
-  },
-  {
-    season: 'October · December',
-    tone: 'Golden-hour season',
-    events: [
-      ['Palm Desert Golf Cart Parade', 'https://golfcartparade.org/'],
-      ['College of the Desert Street Fair · weekends', 'https://codaastreetfair.com/'],
-      ['Palm Springs Vintage Market', 'https://palmspringsvintagemarket.com/'],
-      ['Indian Wells pickleball events', 'https://www.indianwellstennisgarden.com/events/'],
-      ['El Paseo holiday tree lighting', 'https://www.simon.com/mall/the-gardens-on-el-paseo/about'],
-      ['Palm Desert Thanksgiving Day 5K', 'https://www.visitgreaterpalmsprings.com/events/'],
-      ['Photos with Santa at The Gardens', 'https://www.simon.com/mall/the-gardens-on-el-paseo/about'],
-      ['IRONMAN 70.3 La Quinta', 'https://www.ironman.com/races/im703-la-quinta'],
-    ],
   },
 ] as const;
 
@@ -269,6 +184,8 @@ export default function Home() {
   const [calendarError, setCalendarError] = useState(false);
   const [selectedStart, setSelectedStart] = useState<string | null>(null);
   const [selectedEnd, setSelectedEnd] = useState<string | null>(null);
+  const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
+  const [evolveStats, setEvolveStats] = useState({ rating: 4.98, reviewCount: 51 });
 
   const baseMonth = useMemo(() => {
     const now = new Date();
@@ -293,6 +210,20 @@ export default function Home() {
       })
       .then((data) => setCalendar(data))
       .catch(() => setCalendarError(true));
+  }, []);
+
+  useEffect(() => {
+    Promise.allSettled([
+      fetch('/api/site-content').then(async (response) => {
+        if (!response.ok) throw new Error('Content unavailable');
+        setSiteContent((await response.json()) as SiteContent);
+      }),
+      fetch('/api/evolve-stats').then(async (response) => {
+        if (!response.ok) throw new Error('Ratings unavailable');
+        const data = (await response.json()) as { rating: number; reviewCount: number };
+        setEvolveStats({ rating: data.rating, reviewCount: data.reviewCount });
+      }),
+    ]);
   }, []);
 
   useEffect(() => {
@@ -366,7 +297,7 @@ export default function Home() {
             <div><dt>Guests</dt><dd>6</dd></div>
             <div><dt>Bedrooms</dt><dd>3</dd></div>
             <div><dt>Bathrooms</dt><dd>2</dd></div>
-            <div><dt>Reviews</dt><dd>4.98 <span>★</span></dd></div>
+            <div><dt>Reviews</dt><dd>{evolveStats.rating.toFixed(2)} <span>★</span></dd></div>
           </dl>
         </div>
         <div className="hero-image" role="img" aria-label="Palm-lined private pool at the Indian Wells home">
@@ -528,7 +459,10 @@ export default function Home() {
             <p className="eyebrow"><span /> Guest notes</p>
             <h2 id="reviews-title">The kind words<br /><em>we keep.</em></h2>
           </div>
-          <div className="rating-lockup"><strong>4.98</strong><span>★★★★★<br />51 Evolve reviews</span></div>
+          <div className="rating-lockup">
+            <strong>{evolveStats.rating.toFixed(2)}</strong>
+            <span>★★★★★<br />{evolveStats.reviewCount} Evolve {evolveStats.reviewCount === 1 ? 'review' : 'reviews'}</span>
+          </div>
         </div>
         <div className="review-grid">
           {reviews.map((review, index) => (
@@ -554,7 +488,7 @@ export default function Home() {
           </p>
         </div>
         <div className="destination-grid">
-          {destinationGroups.map((item) => (
+          {siteContent.destinations.map((item) => (
             <a href={item.href} target="_blank" rel="noreferrer" key={item.title}>
               <span className="destination-number">{item.number}</span>
               <p>{item.label}</p>
@@ -565,14 +499,10 @@ export default function Home() {
           ))}
         </div>
         <div className="local-strip">
-          {[
-            ['El Paseo', '4 mi', 'Shopping, dining & design'],
-            ['Old Town La Quinta', '4.9 mi', 'Patios, cafés & village charm'],
-            ['The Living Desert', '5.8 mi', 'Wildlife & desert gardens'],
-            ['Palm Springs', '18 mi', 'Art, architecture & nightlife'],
-            ['Aerial Tramway', '28.2 mi', 'A cool climb above the valley'],
-          ].map(([name, distance, copy]) => (
-            <article key={name}><span>{distance}</span><h3>{name}</h3><p>{copy}</p></article>
+          {siteContent.localLinks.map((item) => (
+            <a href={item.href} target="_blank" rel="noreferrer" key={item.name}>
+              <span>{item.distance}</span><h3>{item.name}</h3><p>{item.copy}</p><b aria-hidden="true">↗</b>
+            </a>
           ))}
         </div>
         <div className="events-flow" aria-labelledby="events-title">
@@ -587,14 +517,14 @@ export default function Home() {
             </p>
           </div>
           <div className="season-grid">
-            {seasonalEvents.map((block, index) => (
+            {siteContent.seasons.map((block, index) => (
               <article key={block.season}>
                 <span>0{index + 1}</span>
                 <p>{block.season}</p>
                 <h3>{block.tone}</h3>
                 <ul>
-                  {block.events.map(([event, href]) => (
-                    <li key={event}><a href={href} target="_blank" rel="noreferrer">{event}<span>↗</span></a></li>
+                  {block.events.map((event) => (
+                    <li key={`${event.label}-${event.href}`}><a href={event.href} target="_blank" rel="noreferrer">{event.label}<span>↗</span></a></li>
                   ))}
                 </ul>
               </article>
@@ -633,7 +563,7 @@ export default function Home() {
         <nav aria-label="Footer navigation">
           <a href="#home">The home</a><a href="#gallery">Gallery</a><a href="#stay">Availability</a><a href="#explore">Explore</a>
         </nav>
-        <div className="footer-end"><a href={EVOLVE_URL} target="_blank" rel="noreferrer">Evolve listing 435461 ↗</a><span>indianwells.us</span></div>
+        <div className="footer-end"><a href="/admin">Sitekeeper login ↗</a><span>indianwells.us</span></div>
       </footer>
 
       {activePhoto !== null && (

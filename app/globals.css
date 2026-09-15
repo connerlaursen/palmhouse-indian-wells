@@ -1012,21 +1012,36 @@ h2 em {
   padding: 0 7vw;
 }
 
-.local-strip article {
+.local-strip > a {
   border-left: 1px solid rgba(255, 255, 255, 0.18);
   min-height: 190px;
   padding: 32px 24px;
+  position: relative;
+  transition: background 180ms ease;
 }
 
-.local-strip article:last-child {
+.local-strip > a:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.local-strip > a:last-child {
   border-right: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.local-strip article > span {
+.local-strip > a > span {
   color: var(--sand);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+.local-strip > a > b {
+  color: var(--sand);
+  font-size: 14px;
+  font-weight: 400;
+  position: absolute;
+  right: 20px;
+  top: 29px;
 }
 
 .local-strip h3 {
@@ -1489,7 +1504,7 @@ h2 em {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .local-strip article:nth-child(3) {
+  .local-strip > a:nth-child(3) {
     border-right: 1px solid rgba(255, 255, 255, 0.18);
   }
 
@@ -1741,12 +1756,12 @@ h2 em {
     margin-top: 70px;
   }
 
-  .local-strip article {
+  .local-strip > a {
     min-height: 165px;
     padding: 25px 18px;
   }
 
-  .local-strip article:nth-child(2n) {
+  .local-strip > a:nth-child(2n) {
     border-right: 1px solid rgba(255, 255, 255, 0.18);
   }
 
