@@ -546,6 +546,14 @@ h2 em {
 .gallery-item-6 { grid-column: 6 / span 4; grid-row: 6 / span 7; }
 .gallery-item-7 { grid-column: 10 / span 3; grid-row: 6 / span 7; }
 
+.gallery-item-1 img { object-position: 52% 60%; }
+.gallery-item-2 img { object-position: 50% 62%; }
+.gallery-item-3 img { object-position: 43% 56%; }
+.gallery-item-4 img { object-position: 56% 62%; }
+.gallery-item-5 img { object-position: 62% 55%; }
+.gallery-item-6 img { object-position: 35% 60%; }
+.gallery-item-7 img { object-position: 56% 55%; }
+
 .availability-section {
   background: var(--slate-deep);
   color: var(--white);
