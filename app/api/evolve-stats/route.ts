@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const LISTING_URL = 'https://evolve.com/vacation-rentals/us/ca/indian-wells/435461';
-const READER_URL = `https://r.jina.ai/http://${LISTING_URL.replace(/^https?:\/\//, '')}`;
+const READER_URL = `https://r.jina.ai/https://${LISTING_URL.replace(/^https?:\/\//, '')}`;
 const FALLBACK = { rating: 4.98, reviewCount: 51 };
 
 type Stats = typeof FALLBACK;
@@ -83,32 +83,43 @@ async function fetchDirectStats() {
 
 async function fetchReaderStats() {
   const response = await fetch(READER_URL, {
-    headers: { Accept: 'text/plain' },
+    headers: {
+      Accept: 'text/plain',
+      'User-Agent': 'Mozilla/5.0 (compatible; PalmhouseIndianWells/1.0)',
+    },
     next: { revalidate: 3600 },
   });
   if (!response.ok) throw new Error(`Reader returned ${response.status}`);
-  return parseReaderMarkdown(await response.text());
+  const stats = parseReaderMarkdown(await response.text());
+  if (!stats) throw new Error('Reader response did not include review totals');
+  return stats;
 }
 
 export async function GET() {
+  const diagnostics: string[] = [];
+  let stats: Stats | null = null;
   try {
-    let stats: Stats | null = null;
+    stats = await fetchDirectStats();
+  } catch (error) {
+    diagnostics.push(error instanceof Error ? error.message : 'Direct Evolve request failed');
+  }
+  if (!stats) {
     try {
-      stats = await fetchDirectStats();
-    } catch {
-      // Evolve sometimes challenges server-side requests; use the public reader next.
+      stats = await fetchReaderStats();
+    } catch (error) {
+      diagnostics.push(error instanceof Error ? error.message : 'Reader request failed');
     }
-    if (!stats) stats = await fetchReaderStats();
-    if (!stats) throw new Error('Evolve rating data was not present.');
+  }
 
+  if (stats) {
     return NextResponse.json(
       { ...stats, live: true, syncedAt: new Date().toISOString() },
       { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
     );
-  } catch {
-    return NextResponse.json(
-      { ...FALLBACK, live: false, syncedAt: null },
-      { headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600' } },
-    );
   }
+
+  return NextResponse.json(
+    { ...FALLBACK, live: false, syncedAt: null, diagnostics },
+    { headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600' } },
+  );
 }
