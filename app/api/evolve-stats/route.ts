@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const LISTING_URL = 'https://evolve.com/vacation-rentals/us/ca/indian-wells/435461';
+const READER_URL = `https://r.jina.ai/http://${LISTING_URL.replace(/^https?:\/\//, '')}`;
 const FALLBACK = { rating: 4.98, reviewCount: 51 };
 
 type Stats = typeof FALLBACK;
@@ -59,19 +60,45 @@ function parseEmbeddedJson(html: string): Stats | null {
   return null;
 }
 
+function parseReaderMarkdown(markdown: string): Stats | null {
+  const reviewsSection = markdown.match(
+    /## Reviews\s+([0-5](?:\.\d{1,2})?)\s+([\d,]+) reviews?/i,
+  );
+  if (!reviewsSection) return null;
+  return validStats(reviewsSection[1], reviewsSection[2].replaceAll(',', ''));
+}
+
+async function fetchDirectStats() {
+  const response = await fetch(LISTING_URL, {
+    headers: {
+      Accept: 'text/html,application/xhtml+xml',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'User-Agent': 'Mozilla/5.0 (compatible; PalmhouseIndianWells/1.0)',
+    },
+    next: { revalidate: 3600 },
+  });
+  if (!response.ok) throw new Error(`Evolve returned ${response.status}`);
+  return parseEmbeddedJson(await response.text());
+}
+
+async function fetchReaderStats() {
+  const response = await fetch(READER_URL, {
+    headers: { Accept: 'text/plain' },
+    next: { revalidate: 3600 },
+  });
+  if (!response.ok) throw new Error(`Reader returned ${response.status}`);
+  return parseReaderMarkdown(await response.text());
+}
+
 export async function GET() {
   try {
-    const response = await fetch(LISTING_URL, {
-      headers: {
-        Accept: 'text/html,application/xhtml+xml',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'User-Agent': 'Mozilla/5.0 (compatible; PalmhouseIndianWells/1.0)',
-      },
-      next: { revalidate: 3600 },
-    });
-
-    if (!response.ok) throw new Error(`Evolve returned ${response.status}`);
-    const stats = parseEmbeddedJson(await response.text());
+    let stats: Stats | null = null;
+    try {
+      stats = await fetchDirectStats();
+    } catch {
+      // Evolve sometimes challenges server-side requests; use the public reader next.
+    }
+    if (!stats) stats = await fetchReaderStats();
     if (!stats) throw new Error('Evolve rating data was not present.');
 
     return NextResponse.json(
