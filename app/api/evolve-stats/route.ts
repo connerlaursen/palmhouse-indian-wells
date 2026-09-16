@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 
 const LISTING_URL = 'https://evolve.com/vacation-rentals/us/ca/indian-wells/435461';
 const READER_URL = `https://r.jina.ai/https://${LISTING_URL.replace(/^https?:\/\//, '')}`;
+const ALGOLIA_APP_ID = '2U6AXFDIV3';
+// This is Evolve's browser-exposed, search-only key; it cannot modify their index.
+const ALGOLIA_SEARCH_KEY = 'bb822d4fb11ce6c3a7356f182a0d5c90';
+const ALGOLIA_RECORD_URL =
+  `https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/prod_EvolveListings/435461` +
+  '?attributesToRetrieve=Average%20Rating%2CNumber%20of%20Reviews%2CobjectID';
 const FALLBACK = { rating: 4.98, reviewCount: 51 };
 
 type Stats = typeof FALLBACK;
@@ -81,6 +87,21 @@ async function fetchDirectStats() {
   return parseEmbeddedJson(await response.text());
 }
 
+async function fetchAlgoliaStats() {
+  const response = await fetch(ALGOLIA_RECORD_URL, {
+    headers: {
+      'X-Algolia-Application-Id': ALGOLIA_APP_ID,
+      'X-Algolia-API-Key': ALGOLIA_SEARCH_KEY,
+    },
+    next: { revalidate: 3600 },
+  });
+  if (!response.ok) throw new Error(`Evolve index returned ${response.status}`);
+  const record = (await response.json()) as Record<string, unknown>;
+  const stats = validStats(record['Average Rating'], record['Number of Reviews']);
+  if (!stats) throw new Error('Evolve index did not include review totals');
+  return stats;
+}
+
 async function fetchReaderStats() {
   const response = await fetch(READER_URL, {
     headers: {
@@ -99,9 +120,16 @@ export async function GET() {
   const diagnostics: string[] = [];
   let stats: Stats | null = null;
   try {
-    stats = await fetchDirectStats();
+    stats = await fetchAlgoliaStats();
   } catch (error) {
-    diagnostics.push(error instanceof Error ? error.message : 'Direct Evolve request failed');
+    diagnostics.push(error instanceof Error ? error.message : 'Evolve index request failed');
+  }
+  if (!stats) {
+    try {
+      stats = await fetchDirectStats();
+    } catch (error) {
+      diagnostics.push(error instanceof Error ? error.message : 'Direct Evolve request failed');
+    }
   }
   if (!stats) {
     try {
