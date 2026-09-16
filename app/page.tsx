@@ -284,7 +284,6 @@ export default function Home() {
 
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow"><span /> Indian Wells · California</p>
           <h1 id="hero-title">A quieter kind of <em>desert escape.</em></h1>
           <p className="hero-intro">
             A private three-bedroom retreat with a pool, spa, and room to settle in—just
@@ -306,7 +305,6 @@ export default function Home() {
 
       <section className="intro-section" id="home" aria-labelledby="home-title">
         <div className="intro-heading">
-          <p className="eyebrow"><span /> Come settle in</p>
           <h2 id="home-title">Room to gather.<br /><em>Space to exhale.</em></h2>
         </div>
         <div className="intro-body">
@@ -326,7 +324,6 @@ export default function Home() {
       <section className="feature-split" aria-label="Property highlights">
         <div className="feature-image feature-image-main" />
         <div className="feature-content">
-          <p className="eyebrow light"><span /> The good stuff</p>
           <h2>Everything you need.<br /><em>Nothing you don’t.</em></h2>
           <div className="amenity-list">
             {amenities.map(([title, copy], index) => (
@@ -341,7 +338,6 @@ export default function Home() {
 
       <section className="sleep-section" aria-labelledby="sleep-title">
         <div className="sleep-copy">
-          <p className="eyebrow"><span /> Rest easy</p>
           <h2 id="sleep-title">Three rooms.<br /><em>Six dreamers.</em></h2>
           <p>Soft light, quiet corners, and a real bed for everyone.</p>
         </div>
@@ -362,7 +358,6 @@ export default function Home() {
       <section className="gallery-section" id="gallery" aria-labelledby="gallery-title">
         <div className="gallery-heading">
           <div>
-            <p className="eyebrow"><span /> Have a look around</p>
             <h2 id="gallery-title">Made for<br /><em>slow mornings.</em></h2>
           </div>
           <button className="text-button" type="button" onClick={() => setActivePhoto(0)}>
@@ -386,7 +381,6 @@ export default function Home() {
 
       <section className="availability-section" id="stay" aria-labelledby="availability-title">
         <div className="availability-intro">
-          <p className="eyebrow light"><span /> Plan your stay</p>
           <h2 id="availability-title">Find your place<br /><em>in the sun.</em></h2>
           <p>
             This calendar reads current availability from the Evolve listing. Select a
@@ -456,7 +450,6 @@ export default function Home() {
       <section className="reviews-section" aria-labelledby="reviews-title">
         <div className="reviews-heading">
           <div>
-            <p className="eyebrow"><span /> Guest notes</p>
             <h2 id="reviews-title">The kind words<br /><em>we keep.</em></h2>
           </div>
           <div className="rating-lockup">
@@ -480,7 +473,6 @@ export default function Home() {
 
       <section className="explore-section" id="explore" aria-labelledby="explore-title">
         <div className="explore-header">
-          <p className="eyebrow light"><span /> Beyond the backyard</p>
           <h2 id="explore-title">Close to everything.<br /><em>Far from ordinary.</em></h2>
           <p>
             Indian Wells puts the whole valley within reach—from stadium seats and festival
@@ -508,7 +500,6 @@ export default function Home() {
         <div className="events-flow" aria-labelledby="events-title">
           <div className="events-heading">
             <div>
-              <p className="eyebrow light"><span /> Save the season</p>
               <h2 id="events-title">There’s always a<br /><em>reason to return.</em></h2>
             </div>
             <p>
@@ -536,7 +527,6 @@ export default function Home() {
       <section className="story-section" id="story" aria-labelledby="story-title">
         <div className="story-mark"><img src="/images/logo-palm-houses-transparent.png" alt="" /></div>
         <div className="story-copy">
-          <p className="eyebrow"><span /> A note from the owners</p>
           <h2 id="story-title">A home made<br /><em>for gathering.</em></h2>
           <blockquote>
             “We want every stay at Palmhouse to feel uncomplicated: a stocked kitchen, a
