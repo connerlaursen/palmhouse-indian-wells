@@ -441,7 +441,7 @@ export default function Home() {
             <div><span>Check in</span><strong>{displayDate(selectedStart)}</strong></div>
             <div><span>Check out</span><strong>{displayDate(selectedEnd)}</strong></div>
             <a href={EVOLVE_URL} target="_blank" rel="noreferrer">
-              Continue on Evolve <span>↗</span>
+              Book your stay <span>↗</span>
             </a>
           </div>
         </div>
