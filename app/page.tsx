@@ -284,7 +284,7 @@ export default function Home() {
 
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <h1 id="hero-title">A quieter kind of <em>desert escape.</em></h1>
+          <h1 id="hero-title">A carefree <em>desert escape.</em></h1>
           <p className="hero-intro">
             A private three-bedroom retreat with a pool, spa, and room to settle in—just
             minutes from world-class tennis, golf, and the best of the Coachella Valley.
@@ -358,7 +358,7 @@ export default function Home() {
       <section className="gallery-section" id="gallery" aria-labelledby="gallery-title">
         <div className="gallery-heading">
           <div>
-            <h2 id="gallery-title">Made for<br /><em>slow mornings.</em></h2>
+            <h2 id="gallery-title">For any occasion<br /><em>picture yourself here.</em></h2>
           </div>
           <button className="text-button" type="button" onClick={() => setActivePhoto(0)}>
             View all {photos.length} photos <span>↗</span>
@@ -381,24 +381,24 @@ export default function Home() {
 
       <section className="availability-section" id="stay" aria-labelledby="availability-title">
         <div className="availability-intro">
-          <h2 id="availability-title">Find your place<br /><em>in the sun.</em></h2>
+          <h2 id="availability-title">Claim your place<br /><em>in the sun.</em></h2>
           <p>
-            This calendar reads current availability from the Evolve listing. Select a
-            possible stay, then continue to Evolve for the latest rate, policies, and secure
-            booking.
+            View availability below. Then, select <strong>BOOK YOUR STAY</strong> which will
+            take you to our booking agent website, Evolve, for the latest rates, policies and
+            secure booking.
           </p>
           <div className="calendar-legend">
             <span><i className="available-dot" /> Available</span>
             <span><i className="unavailable-dot" /> Booked</span>
             <span><i className="limited-dot" /> Checkout only</span>
           </div>
-          <p className="source-note">
-            {calendarError
-              ? 'Live calendar is temporarily unavailable. Evolve has the current dates.'
-              : calendar
-                ? 'Live availability loaded from Evolve.'
+          {!calendar && (
+            <p className="source-note">
+              {calendarError
+                ? 'Live calendar is temporarily unavailable. Evolve has the current dates.'
                 : 'Loading live availability…'}
-          </p>
+            </p>
+          )}
         </div>
         <div className="calendar-panel">
           <div className="calendar-controls">
@@ -482,7 +482,6 @@ export default function Home() {
         <div className="destination-grid">
           {siteContent.destinations.map((item) => (
             <a href={item.href} target="_blank" rel="noreferrer" key={item.title}>
-              <span className="destination-number">{item.number}</span>
               <p>{item.label}</p>
               <h3>{item.title}</h3>
               <div><span>{item.copy}</span><strong>{item.meta}</strong></div>
@@ -508,9 +507,8 @@ export default function Home() {
             </p>
           </div>
           <div className="season-grid">
-            {siteContent.seasons.map((block, index) => (
+            {siteContent.seasons.map((block) => (
               <article key={block.season}>
-                <span>0{index + 1}</span>
                 <p>{block.season}</p>
                 <h3>{block.tone}</h3>
                 <ul>

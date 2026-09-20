@@ -23,13 +23,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Palmhouse Indian Wells',
-    description: 'A quieter kind of desert escape.',
+    description: 'A carefree desert escape.',
     images: [
       {
         url: '/og.png',
         width: 1200,
         height: 630,
-        alt: 'Palmhouse Indian Wells — A quieter kind of desert escape.',
+        alt: 'Palmhouse Indian Wells — A carefree desert escape.',
       },
     ],
     locale: 'en_US',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Palmhouse Indian Wells',
-    description: 'A quieter kind of desert escape.',
+    description: 'A carefree desert escape.',
     images: ['/og.png'],
   },
 };

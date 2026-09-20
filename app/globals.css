@@ -911,21 +911,11 @@ h2 em {
   color: var(--ink);
 }
 
-.destination-number {
-  color: var(--sand);
-  font-family: var(--serif);
-  font-size: 17px;
-}
-
-.destination-grid > a:hover .destination-number {
-  color: var(--clay);
-}
-
 .destination-grid > a > p {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.17em;
-  margin-top: 38px;
+  margin-top: 0;
   text-transform: uppercase;
 }
 
@@ -1070,18 +1060,12 @@ h2 em {
   padding: 28px;
 }
 
-.season-grid article > span {
-  color: var(--sand);
-  font-family: var(--serif);
-  font-size: 18px;
-}
-
 .season-grid article > p {
   color: rgba(255, 254, 251, 0.76);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
-  margin-top: 46px;
+  margin-top: 0;
   text-transform: uppercase;
 }
 
