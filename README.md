@@ -2,7 +2,11 @@
 
 A responsive vacation-rental website for a private desert home in Indian Wells, California.
 
-Live site: [palmhouse-indian-wells.connerlaursenk.chatgpt.site](https://palmhouse-indian-wells.connerlaursenk.chatgpt.site)
+Production domain: [www.indianwells.us](https://www.indianwells.us)
+
+The application is deployed directly to Cloudflare Workers and uses a
+Cloudflare D1 database. The private sitekeeper routes are protected with
+Cloudflare Access.
 
 ## Features
 
