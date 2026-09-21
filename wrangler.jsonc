@@ -9,6 +9,16 @@
     "not_found_handling": "none",
     "binding": "ASSETS"
   },
+  "routes": [
+    {
+      "pattern": "www.indianwells.us",
+      "custom_domain": true
+    },
+    {
+      "pattern": "indianwells.us",
+      "custom_domain": true
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
