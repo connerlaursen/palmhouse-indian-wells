@@ -32,4 +32,4 @@ Create a production build with:
 pnpm build
 ```
 
-The hosted Sitekeeper authorization allowlist is configured with the `ADMIN_EMAIL` runtime environment variable. Do not commit private credentials or local environment files.
+The hosted Sitekeeper authorization allowlist is configured with the comma-separated `ADMIN_EMAILS` runtime environment variable. The singular `ADMIN_EMAIL` variable remains supported for backwards compatibility. Do not commit private credentials or local environment files.
