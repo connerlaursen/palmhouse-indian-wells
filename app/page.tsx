@@ -91,34 +91,15 @@ type CalendarResponse = {
 const pad = (value: number) => String(value).padStart(2, '0');
 const dayKey = (date: Date) =>
   `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
-const displayDate = (key: string | null) => {
-  if (!key) return 'Choose a date';
-  const date = new Date(
-    Number(key.slice(0, 4)),
-    Number(key.slice(4, 6)) - 1,
-    Number(key.slice(6, 8)),
-  );
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(date);
-};
 
 function MonthCalendar({
   month,
   statuses,
   loading,
-  selectedStart,
-  selectedEnd,
-  onSelect,
 }: {
   month: Date;
   statuses: Record<string, string>;
   loading: boolean;
-  selectedStart: string | null;
-  selectedEnd: string | null;
-  onSelect: (key: string) => void;
 }) {
   const year = month.getFullYear();
   const monthIndex = month.getMonth();
@@ -150,26 +131,19 @@ function MonthCalendar({
           const past = date < today;
           const unavailable = status === 'NX';
           const checkoutOnly = status === 'NO';
-          const inRange =
-            Boolean(selectedStart && selectedEnd) &&
-            key > selectedStart! &&
-            key < selectedEnd!;
-          const selected = key === selectedStart || key === selectedEnd;
           const disabled = loading || past || unavailable;
           const label = `${date.toLocaleString('en-US', { month: 'long' })} ${day}, ${year}${
             unavailable ? ', booked' : checkoutOnly ? ', checkout only' : ', available'
           }`;
           return (
-            <button
+            <time
               aria-label={label}
-              className={`${unavailable ? 'unavailable' : ''} ${checkoutOnly ? 'limited' : ''} ${inRange ? 'in-range' : ''} ${selected ? 'selected' : ''}`}
-              disabled={disabled}
+              className={`calendar-day ${unavailable ? 'unavailable' : ''} ${checkoutOnly ? 'limited' : ''} ${disabled ? 'disabled' : ''}`}
+              dateTime={`${year}-${pad(monthIndex + 1)}-${pad(day)}`}
               key={key}
-              onClick={() => onSelect(key)}
-              type="button"
             >
               {day}
-            </button>
+            </time>
           );
         })}
       </div>
@@ -182,8 +156,6 @@ export default function Home() {
   const [monthOffset, setMonthOffset] = useState(0);
   const [calendar, setCalendar] = useState<CalendarResponse | null>(null);
   const [calendarError, setCalendarError] = useState(false);
-  const [selectedStart, setSelectedStart] = useState<string | null>(null);
-  const [selectedEnd, setSelectedEnd] = useState<string | null>(null);
   const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
   const [evolveStats, setEvolveStats] = useState({ rating: 4.98, reviewCount: 51 });
 
@@ -246,23 +218,6 @@ export default function Home() {
       window.removeEventListener('keydown', onKey);
     };
   }, [activePhoto]);
-
-  const selectDate = (key: string) => {
-    if (!selectedStart || selectedEnd || key <= selectedStart) {
-      setSelectedStart(key);
-      setSelectedEnd(null);
-      return;
-    }
-    const hasBlockedNight = Object.entries(calendar?.statusByDay ?? {}).some(
-      ([date, status]) => date > selectedStart && date < key && status === 'NX',
-    );
-    if (hasBlockedNight) {
-      setSelectedStart(key);
-      setSelectedEnd(null);
-      return;
-    }
-    setSelectedEnd(key);
-  };
 
   return (
     <main id="top">
@@ -410,7 +365,7 @@ export default function Home() {
             >
               ←
             </button>
-            <span>Choose your dates</span>
+            <span>Availability calendar</span>
             <button
               aria-label="Next month"
               onClick={() => setMonthOffset((value) => Math.min(11, value + 1))}
@@ -423,23 +378,15 @@ export default function Home() {
             <MonthCalendar
               loading={!calendar && !calendarError}
               month={visibleMonth}
-              onSelect={selectDate}
-              selectedEnd={selectedEnd}
-              selectedStart={selectedStart}
               statuses={calendar?.statusByDay ?? {}}
             />
             <MonthCalendar
               loading={!calendar && !calendarError}
               month={nextMonth}
-              onSelect={selectDate}
-              selectedEnd={selectedEnd}
-              selectedStart={selectedStart}
               statuses={calendar?.statusByDay ?? {}}
             />
           </div>
           <div className="booking-bar">
-            <div><span>Check in</span><strong>{displayDate(selectedStart)}</strong></div>
-            <div><span>Check out</span><strong>{displayDate(selectedEnd)}</strong></div>
             <a href={EVOLVE_URL} target="_blank" rel="noreferrer">
               Book your stay <span>↗</span>
             </a>

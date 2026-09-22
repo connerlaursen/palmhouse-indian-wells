@@ -656,7 +656,7 @@ h2 em {
   text-align: center;
 }
 
-.calendar-grid button,
+.calendar-day,
 .empty-day {
   align-items: center;
   aspect-ratio: 1;
@@ -664,86 +664,42 @@ h2 em {
   justify-content: center;
 }
 
-.calendar-grid button {
+.calendar-day {
   background: var(--white);
   border: 1px solid rgba(48, 61, 75, 0.2);
   border-radius: 50%;
   color: var(--ink);
-  cursor: pointer;
   font-size: 15px;
   font-weight: 650;
   margin: 2px;
   position: relative;
-  transition: background 150ms ease, color 150ms ease;
+  text-decoration: none;
   z-index: 1;
 }
 
-.calendar-grid button:hover:not(:disabled),
-.calendar-grid button.selected {
-  background: var(--slate-dark);
-  color: var(--white);
-}
-
-.calendar-grid button.in-range {
-  background: #dbe3ec;
-  border-color: #dbe3ec;
-  border-radius: 0;
-}
-
-.calendar-grid button.selected {
-  border-radius: 50%;
-}
-
-.calendar-grid button.unavailable {
+.calendar-day.unavailable {
   background: #8291a4;
   border-color: #8291a4;
   color: var(--white);
-  cursor: not-allowed;
   opacity: 0.92;
 }
 
-.calendar-grid button.limited:not(.selected) {
+.calendar-day.limited {
   background: var(--sand);
   border-color: var(--sand-dark);
   color: var(--ink);
 }
 
-.calendar-grid button:disabled:not(.unavailable) {
+.calendar-day.disabled:not(.unavailable) {
   background: transparent;
   border-color: transparent;
   color: rgba(48, 61, 75, 0.3);
-  cursor: default;
 }
 
 .booking-bar {
-  align-items: stretch;
   background: var(--dune);
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.35fr;
-  margin: 0 -30px;
-}
-
-.booking-bar > div {
-  border-right: 1px solid var(--line);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 78px;
-  padding: 15px 24px;
-}
-
-.booking-bar > div span {
-  color: var(--ink-soft);
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  margin-bottom: 7px;
-  text-transform: uppercase;
-}
-
-.booking-bar strong {
-  font-family: var(--serif);
-  font-size: 17px;
-  font-weight: 400;
+  margin: 0 -30px;
 }
 
 .booking-bar > a {
@@ -756,10 +712,12 @@ h2 em {
   gap: 18px;
   justify-content: center;
   letter-spacing: 0.08em;
+  min-height: 78px;
   padding: 20px;
   text-align: center;
   text-transform: uppercase;
   transition: background 160ms ease;
+  width: 100%;
 }
 
 .booking-bar > a:hover {
@@ -1646,13 +1604,11 @@ h2 em {
   }
 
   .booking-bar {
-    grid-template-columns: repeat(2, 1fr);
     margin-left: -16px;
     margin-right: -16px;
   }
 
   .booking-bar > a {
-    grid-column: 1 / -1;
     min-height: 64px;
   }
 
